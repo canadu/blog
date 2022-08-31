@@ -3,11 +3,11 @@
     <div class="profile">
         <?php
         // 管理者情報を取得
-        $select_profile = $conn->prepare("SELECT * FROM 'admin' WHERE id = ?");
+        $select_profile = $conn->prepare("SELECT * FROM admin WHERE id = ?");
         $select_profile->execute([$admin_id]);
         $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
         ?>
-        <p><?php $fetch_profile['name']; ?></p>
+        <p><?php echo $fetch_profile['name']; ?></p>
         <a href="update_profile.php" class="btn">プロフィールを更新</a>
     </div>
     <nav class="navbar">

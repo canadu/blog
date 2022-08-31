@@ -1,37 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400&display=swap');
+
 :root {
-    --main-color:#4834d4;
-    --red:#e74c3c;
-    --orange:#f39c12;
-    --black:#34495e;
-    --white:#fff;
-    --light-color:#999;
-    --light-bg:#f5f5f5;
-    --border:.2rem solid var(--black);
-    --box-shadow:0 .5rem 1rem rgba(0,0,0,1);
+    --main-color: #4834d4;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --black: #34495e;
+    --white: #fff;
+    --light-color: #999;
+    --light-bg: #f5f5f5;
+    --border: .2rem solid var(--black);
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 1);
 }
 
-*{
+* {
     font-family: 'Noto Sans JP', sans-serif;
-    margin: 0; padding:0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    outline: none; border:none;
+    outline: none;
+    border: none;
     text-decoration: none;
 }
+
 ::selection {
-    color:var(--white);
+    color: var(--white);
     background-color: var(--main-color);
 }
+
 ::-webkit-scrollbar {
     height: .5rem;
     width: 1rem;
 }
+
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background-color: var(--main-color);
 }
+
 html {
     font-size: 62.5%;
     overflow-x: hidden;
@@ -61,7 +69,7 @@ body {
 .delete-btn,
 .option-btn,
 .btn {
-    width:100%;
+    width: 100%;
 }
 
 .inline-btn,
@@ -90,18 +98,19 @@ body {
 .delete-btn:hover,
 .inline-btn:hover,
 .inline-option-btn:hover,
-.inline-delete-btn:hover    {
+.inline-delete-btn:hover {
     background-color: var(--black);
 }
 
 .flex-btn {
-    display:flex;
-    gap:1rem;
+    display: flex;
+    gap: 1rem;
 }
 
 .header {
     position: fixed;
-    top:0; left: 0;
+    top: 0;
+    left: 0;
     z-index: 1000;
     background-color: var(--white);
     border-right: var(--border);
@@ -112,22 +121,22 @@ body {
 
 .header .logo {
     font-size: 2.5rem;
-    color:var(--black);
+    color: var(--black);
     text-align: center;
     display: block;
 }
 
 .header .logo span {
-    color:var(--main-color);
+    color: var(--main-color);
 }
 
 .header .profile {
     border-radius: .5rem;
-    border:var(--border);
+    border: var(--border);
     background-color: var(--light-bg);
     padding: 1.5rem;
     text-align: center;
-    margin:2rem 0;
+    margin: 2rem 0;
 }
 
 .header .profile p {
@@ -148,20 +157,21 @@ body {
     color: var(--light-color);
 }
 
-.header .navbar a i{
+.header .navbar a i {
     margin-right: 1.5rem;
     color: var(--main-color);
-    transition:.2s linear;
+    transition: .2s linear;
 }
 
-header .navbar a:hover i{
+header .navbar a:hover i {
     margin-right: 2.5rem;
 }
 
 #menu-btn {
     font-size: 2rem;
     position: fixed;
-    top:1rem; left:1rem;
+    top: 1rem;
+    left: 1rem;
     border-radius: .5rem;
     border: var(--border);
     z-index: 1100;
@@ -175,9 +185,46 @@ header .navbar a:hover i{
     display: none;
 }
 
-#menu-btn:hover{
+#menu-btn:hover {
     background-color: var(--black);
     color: var(--white);
+}
+
+.dashboard .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.dashboard .box-container .box {
+    text-align: center;
+    background-color: var(--white);
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.dashboard .box-container .box h3 {
+    font-size: 2.7rem;
+    color: var(--black);
+}
+
+.dashboard .box-container .box h3 span {
+    font-size: 2rem;
+}
+
+.dashboard .box-container .box p {
+    padding: 1.5rem;
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    border-radius: .5rem;
+    font-size: 1.8rem;
+    border: var(--border);
+    margin: 1rem 0;
+    color: var(--light-color);
 }
 
 
@@ -194,33 +241,37 @@ header .navbar a:hover i{
     html {
         font-size: 55%;
     }
+
     body {
         padding-left: 0;
     }
+
     #menu-btn {
         display: inline-block;
     }
+
     .header {
         left: -35rem;
         transition: .2s linear;
     }
+
     .header.active {
         left: 0;
-        box-shadow: 0 0 0 100vw rgba(0,0,0,7);
+        box-shadow: 0 0 0 100vw rgba(0, 0, 0, 7);
     }
 }
 
-@media (max-width:768px) {
-
-}
+@media (max-width:768px) {}
 
 @media (max-width:450px) {
     html {
         font-size: 50%;
     }
+
     .flex-btn {
         flex-flow: column;
-        gap:0
+        gap: 0
     }
 }
+
 /* media queries end */

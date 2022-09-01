@@ -50,6 +50,12 @@ body {
     padding-left: 35rem;
 }
 
+section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem
+}
+
 .btn,
 .option-btn,
 .delete-btn,
@@ -107,6 +113,14 @@ body {
     gap: 1rem;
 }
 
+.heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    text-transform: capitalize;
+    color: var(--black);
+    font-size: 3rem;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -115,15 +129,16 @@ body {
     background-color: var(--white);
     border-right: var(--border);
     padding: 2rem;
-    height: 100vh;
+    min-height: 100vh;
     width: 35rem;
+    text-align: center;
 }
 
 .header .logo {
     font-size: 2.5rem;
     color: var(--black);
-    text-align: center;
-    display: block;
+    /* text-align: center;
+    display: block; */
 }
 
 .header .logo span {
@@ -131,26 +146,31 @@ body {
 }
 
 .header .profile {
+    padding: 2rem;
     border-radius: .5rem;
-    border: var(--border);
     background-color: var(--light-bg);
-    padding: 1.5rem;
-    text-align: center;
+    /* text-align: center; */
     margin: 2rem 0;
+    border: var(--border);
 }
 
 .header .profile p {
+    margin-bottom: 1.5rem;
     font-size: 2rem;
-    color: var(--light-color);
-    margin-bottom: .5rem;
+    color: var(--black);
+}
+
+.header .navbar {
+    padding: 1rem;
 }
 
 .header .navbar a {
     display: block;
+    padding: 2rem 0;
     font-size: 2rem;
-    margin-bottom: 2rem;
-    padding: 1rem 0;
-
+    color: var(--black);
+    /* margin-bottom: 2rem; */
+    text-align: left;
 }
 
 .header .navbar a span {
@@ -164,25 +184,26 @@ body {
 }
 
 header .navbar a:hover i {
-    margin-right: 2.5rem;
+    margin-right: 3rem;
 }
 
 #menu-btn {
-    font-size: 2rem;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    border-radius: .5rem;
+    display: none;
     border: var(--border);
-    z-index: 1100;
+    border-radius: .5rem;
     background-color: var(--white);
-    height: 4.5rem;
-    width: 5rem;
-    line-height: 4.2rem;
     color: var(--black);
     cursor: pointer;
+    box-shadow: var(--border);
+    height: 4.5rem;
+    line-height: 4.3rem;
+    width: 4.5rem;
+    font-size: 2rem;
+    position: sticky;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10000;
     text-align: center;
-    display: none;
 }
 
 #menu-btn:hover {

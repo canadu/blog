@@ -95,6 +95,29 @@ if (!isset($admin_id)) {
                 <a href="users_accounts.php" class="btn">管理者を見る</a>
             </div>
 
+            <!-- コメント  -->
+            <div class="box">
+                <?php
+                $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = ?");
+                $select_comments->execute([$admin_id]);
+                $number_of_comments = $select_comments->rowCount();
+                ?>
+                <h3><?php echo $number_of_comments; ?></h3>
+                <p>総コメント数</p>
+                <a href="comments.php" class="btn">コメントを見る</a>
+            </div>
+            <!-- いいね  -->
+            <div class="box">
+                <?php
+                $select_likes = $conn->prepare("SELECT * FROM likes WHERE admin_id = ?");
+                $select_likes->execute([$admin_id]);
+                $number_of_likes = $select_likes->rowCount();
+                ?>
+                <h3><?php echo $number_of_likes; ?></h3>
+                <p>総いいね数</p>
+                <a href="view_posts.php" class="btn">公開されている投稿を見る</a>
+            </div>
+
         </div>
     </section>
     <!-- dashboard section ends -->

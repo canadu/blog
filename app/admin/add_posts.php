@@ -3,6 +3,8 @@
 include '../components/connect.php';
 session_start();
 
+define('STATUS', array('active', 'deactive'));
+
 $admin_id = $_SESSION['admin_id'];
 
 if (!isset($admin_id)) {
@@ -11,12 +13,12 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['publish'])) {
     //投稿
-    Post($admin_id, 'active', $conn);
+    Post($admin_id, STATUS[0], $conn);
 }
 
 if (isset($_POST['draft'])) {
     //下書き
-    Post($admin_id, 'deactive', $conn);
+    Post($admin_id, STATUS[1], $conn);
 }
 
 function Post(string $id, string $param_status, PDO $conn)
@@ -53,7 +55,7 @@ function Post(string $id, string $param_status, PDO $conn)
     } else {
         $insert_post = $conn->prepare("INSERT INTO posts(admin_idm, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
         $insert_post->execute([$id, $name, $title, $content, $category, $image, $status]);
-        $message[] = $param_status == 'active'  ? '投稿しました。' : '下書きに保存しました。';
+        $message[] = $param_status == STATUS[0]  ? '投稿しました。' : '下書きに保存しました。';
     }
 }
 

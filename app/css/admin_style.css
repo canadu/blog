@@ -65,16 +65,19 @@ section {
     align-items: center;
     justify-content: space-between;
     position: sticky;
-    top:0; left: 0;
+    top: 0;
+    left: 0;
     z-index: 1000;
 }
+
 .message span {
     font-size: 2rem;
     color: var(--black);
 }
+
 .message i {
     color: var(--red);
-    cursor:pointer;
+    cursor: pointer;
     font-size: 2.5rem;
     transition: .2s linear;
 }
@@ -222,7 +225,7 @@ header .navbar a:hover i {
     background-color: var(--white);
     color: var(--black);
     cursor: pointer;
-    box-shadow: var(--border);
+    box-shadow: var(--black);
     height: 4.5rem;
     line-height: 4.3rem;
     width: 4.5rem;
@@ -251,7 +254,7 @@ header .navbar a:hover i {
     text-align: center;
     background-color: var(--white);
     border: var(--border);
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
     border-radius: .5rem;
     text-align: center;
     padding: 1.5rem;
@@ -289,31 +292,31 @@ header .navbar a:hover i {
 .form-container form {
     background-color: var(--white);
     border-radius: .5rem;
-    border:var(--border);
+    border: var(--border);
     padding: 2rem;
     box-shadow: var(--box-shadow);
     text-align: center;
     width: 50rem;
 }
 
-.form-container form h3{
+.form-container form h3 {
     font-size: 2rem;
     color: var(--black);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
 }
 
-.form-container form p{
+.form-container form p {
     margin: 1rem 0;
     font-size: 1.8rem;
-    color:var(--light-color);
+    color: var(--light-color);
 }
 
-.form-container form p span{
+.form-container form p span {
     color: var(--main-color);
 }
 
-.form-container form .box{
+.form-container form .box {
     width: 100%;
     background-color: var(--light-bg);
     border-radius: .5rem;
@@ -349,7 +352,7 @@ header .navbar a:hover i {
 
     .header.active {
         left: 0;
-        box-shadow: 0 0 0 100vw rgba(0, 0, 0, 7);
+        box-shadow: 0 0 0 100vw rgba(0, 0, 0, .7);
     }
 }
 

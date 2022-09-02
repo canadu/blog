@@ -3,21 +3,28 @@
 include '../components/connect.php';
 session_start();
 
+$message = [];
+
 if (isset($_POST['submit'])) {
 
   $name = $_POST['name'];
   $name = htmlspecialchars($name, ENT_QUOTES);
 
-  $pass = sha1($_POST['pass']);
+  $pass = $_POST['pass'];
   $pass = htmlspecialchars($pass, ENT_QUOTES);
 
-  $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ? AND password = ?");
-  $select_admin->execute([$name, $pass]);
+  $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
+  $select_admin->execute([$name]);
 
   if ($select_admin->rowCount() > 0) {
     $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['admin_id'] = $fetch_admin_id['id'];
-    header('location:dashboard.php');
+    //入力したパスワードと登録済みのパスワードの比較
+    if (password_verify($pass, $fetch_admin_id['password']) === TRUE) {
+      $_SESSION['admin_id'] = $fetch_admin_id['id'];
+      header('location:dashboard.php');
+    } else {
+      $message[] = 'ユーザー名かパスワードが違います。';
+    }
   } else {
     $message[] = 'ユーザー名かパスワードが違います。';
   }
@@ -33,8 +40,8 @@ if (isset($_POST['submit'])) {
   <title>ログイン</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
   <link rel="stylesheet" href="../css/admin_style.css">
+
 </head>
 
 <body style="padding-left:0 !important;">

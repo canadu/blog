@@ -14,7 +14,6 @@ if (isset($_POST['submit'])) {
 
     //ユーザー名の更新
     $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-
     if (!empty($name)) {
         $select_name = $conn->prepare("SELECT * FROM admin WHERE name = ?");
         $select_name->execute([$name]);
@@ -23,6 +22,7 @@ if (isset($_POST['submit'])) {
         } else {
             $update_name = $conn->prepare("UPDATE admin SET name = ? WHERE id = ?");
             $update_name->execute([$name, $admin_id]);
+            $message[] = 'ユーザー名を更新しました。';
         }
     }
 

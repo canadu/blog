@@ -303,11 +303,12 @@ header .navbar a:hover i {
     font-size: 2rem;
     color: var(--black);
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
 }
 
 .form-container form p {
-    margin: 1rem 0;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
     font-size: 1.8rem;
     color: var(--light-color);
 }
@@ -327,10 +328,44 @@ header .navbar a:hover i {
     margin: 1rem 0;
 }
 
+/* 投稿画面 */
+.post-editor form {
+    max-width: 80rem;
+    margin: 0 auto;
+    background-color: var(--white);
+    box-sizing: var(--box-shadow);
+    border: var(--border);
+    border-radius: .5rem;
+    padding-top: 1rem;
+    padding: 2rem;
+}
 
+.post-editor form p {
+    color: var(--light-color);
+    font-size: 1.8rem;
+    padding-top: 1rem;
+}
 
+.post-editor form p span {
+    color: var(--red);
+}
 
+.post-editor form .box {
+    width: 100%;
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    padding: 2rem;
+    font-size: 2rem;
+    color: var(--black);
+    margin: 1rem 0;
+    border: var(--border);
+}
 
+.post-editor textarea {
+    resize: none;
+    height: 40rem;
+
+}
 /* media queries starts */
 @media (max-width:991px) {
     html {

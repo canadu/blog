@@ -4,9 +4,8 @@ include '../components/connect.php';
 session_start();
 
 define('STATUS', array('active', 'deactive'));
-
 $admin_id = $_SESSION['admin_id'];
-
+$message = [];
 if (!isset($admin_id)) {
     header('location:admin_login.php');
 }
@@ -23,7 +22,7 @@ if (isset($_POST['draft'])) {
 
 function Post(string $id, string $param_status, PDO $conn)
 {
-
+    global $message;
     $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
     $title = htmlspecialchars($_POST['title'], ENT_QUOTES);
     $content = htmlspecialchars($_POST['content'], ENT_QUOTES);
@@ -38,7 +37,7 @@ function Post(string $id, string $param_status, PDO $conn)
     $select_image = $conn->prepare("SELECT * FROM posts WHERE image = ? AND admin_id = ?");
     $select_image->execute([$image, $id]);
 
-    if (isset($image)) {
+    if (isset($image) && !empty($image)) {
         if ($select_image->rowCount() > 0 and $image != '') {
             $message[] = '画像ファイル名が同じです。';
         } elseif ($image_size > 2000000) {
@@ -51,9 +50,9 @@ function Post(string $id, string $param_status, PDO $conn)
     }
 
     if ($select_image->rowCount() > 0 and $image != '') {
-        $message[] = '画像ファイルをファイル名を変更してください';
+        $message[] = '画像ファイルのファイル名を変更してください';
     } else {
-        $insert_post = $conn->prepare("INSERT INTO posts(admin_idm, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
+        $insert_post = $conn->prepare("INSERT INTO posts(admin_id, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
         $insert_post->execute([$id, $name, $title, $content, $category, $image, $status]);
         $message[] = $param_status == STATUS[0]  ? '投稿しました。' : '下書きに保存しました。';
     }
@@ -77,6 +76,48 @@ function Post(string $id, string $param_status, PDO $conn)
 <body>
 
     <?php include '../components/admin_header.php' ?>
+
+    <section class="post-editor">
+        <h1 class="heading">新規投稿</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="name" value="<?php echo $fetch_profile['name']; ?>">
+            <p>投稿タイトル<span>*</span></p>
+            <input type="text" name="title" maxlength="100" require placeholder="投稿タイトルを入力してください。" class="box">
+            <p>投稿記事<span>*</span></p>
+            <textarea name="content" class="box" required maxlength="10000" placeholder="記事を入力してください。" cols="30" rows="10"></textarea>
+            <p>投稿カテゴリ<span>*</span></p>
+            <select name="category" class="box" required>
+                <option value="" selected disabled>-- カテゴリを選択</option>
+                <option value="nature">自然</option>
+                <option value="education">教育</option>
+                <option value="pets and animals">ペットや動物</option>
+                <option value="technology">テクノロジー</option>
+                <option value="fashion">ファッション</option>
+                <option value="entertainment">娯楽</option>
+                <option value="movies and animations">映画</option>
+                <option value="gaming">ゲーム</option>
+                <option value="music">音楽</option>
+                <option value="sports">スポーツ</option>
+                <option value="news">ニュース</option>
+                <option value="travel">旅行</option>
+                <option value="comedy">お笑い</option>
+                <option value="design and development">デザインや開発</option>
+                <option value="food and drinks">食べ物</option>
+                <option value="lifestyle">生活</option>
+                <option value="personal">人物</option>
+                <option value="health and fitness">健康</option>
+                <option value="business">仕事</option>
+                <option value="shopping">買い物</option>
+                <option value="animations">アニメ</option>
+            </select>
+            <p>投稿画像</p>
+            <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
+            <div class="flex-btn">
+                <input type="submit" value="投稿" name="publish" class="btn">
+                <input type="submit" value="下書き" name="draft" class="option-btn">
+            </div>
+        </form>
+    </section>
 
 </body>
 

@@ -7,11 +7,8 @@ $message = [];
 
 if (isset($_POST['submit'])) {
 
-  $name = $_POST['name'];
-  $name = htmlspecialchars($name, ENT_QUOTES);
-
-  $pass = $_POST['pass'];
-  $pass = htmlspecialchars($pass, ENT_QUOTES);
+  $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
+  $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
 
   $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
   $select_admin->execute([$name]);

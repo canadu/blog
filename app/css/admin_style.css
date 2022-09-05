@@ -481,9 +481,35 @@ header .navbar a:hover i {
     margin-right: .5rem;
 }
 
+/* アカウント管理ページ */
+.accounts .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 33rem);
+    gap:1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 
+.accounts .box-container .box{
+   background-color: var(--white);
+   border-radius: .5rem;
+   box-shadow: var(--box-shadow);
+   border:var(--border);
+   padding:1rem 2rem;
+   text-align: center;
+}
 
+.accounts .box-container .box p{
+   margin: .5rem 0;
+   font-size: 1.8rem;
+   color:var(--black);
+   line-height: 1.5;
+}
+
+.accounts .box-container .box p span{
+   color:var(--main-color);
+}
 
 
 /* media queries starts */

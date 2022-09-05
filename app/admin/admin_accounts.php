@@ -60,28 +60,36 @@ if (isset($_POST['delete'])) {
             // 管理者アカウントを取得して表示する
             $select_account = $conn->prepare("SELECT * FROM admin");
             $select_account->execute();
-            if($select_account->rowCount() > 0) :
-                while($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
+            if ($select_account->rowCount() > 0) {
+                while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
                     $count_admin_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
                     $count_admin_posts->execute([$fetch_accounts['id']]);
                     $total_admin_posts = $count_admin_posts->rowCount();
             ?>
-            <div class="box" style="order:<?php if($fetch_accounts['id'] == $admin_id) {echo '-1';} ?>;">
-                <p>管理者ID:<span><?php echo $fetch_accounts['id']; ?></span></p>
-                <p>ユーザー名:<span><?php echo $fetch_accounts['name']; ?></span></p>
-                <p>総投稿数:<span><?php echo $total_admin_posts; ?></span></p>
-                <div class="flex-btn">
-                    <?php
-                        if($fetch_accounts['id'] == $admin_id) :
-                    ?>
-                        <a href="update_profile.php" class="option-btn" style="margin-bottom: .5rem;">更新</a>
-                        <form action="" method="POST">
-                            <input type="hidden" name="post_id" value="<?php echo $fetch_accounts[id]; ?>" on>
-                            <button type="submit" name="delete" onclick="return confirm('アカウントを削除しますか？');" class="delete-btn" style="margin-bottom:.5rem;">削除</button>
-                        </form>
-                    <?php endif; ?>
-                </div>
-            </div>
+                    <div class="box" style="order:<?php if ($fetch_accounts['id'] == $admin_id) {
+                                                        echo '-1';
+                                                    } ?>;">
+                        <p>管理者ID:<span><?php echo $fetch_accounts['id']; ?></span></p>
+                        <p>ユーザー名:<span><?php echo $fetch_accounts['name']; ?></span></p>
+                        <p>総投稿数:<span><?php echo $total_admin_posts; ?></span></p>
+                        <div class="flex-btn">
+                            <?php
+                            if ($fetch_accounts['id'] == $admin_id) :
+                            ?>
+                                <a href="update_profile.php" class="option-btn" style="margin-bottom: .5rem;">更新</a>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="post_id" value="<?php echo $fetch_accounts['id']; ?>" on>
+                                    <button type="submit" name="delete" onclick="return confirm('アカウントを削除しますか？');" class="delete-btn" style="margin-bottom:.5rem;">削除</button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+            <?php
+                }
+            } else {
+                echo '<p class="empty">利用できるアカウントはありません。</p>';
+            }
+            ?>
         </div>
     </section>
     <!-- admins accounts section ends -->

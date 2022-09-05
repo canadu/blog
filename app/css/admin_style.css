@@ -87,6 +87,11 @@ section {
     color: var(--black);
 }
 
+
+
+
+
+
 .btn,
 .option-btn,
 .delete-btn,
@@ -101,19 +106,25 @@ section {
     cursor: pointer;
     padding: 1rem 3rem;
     text-align: center;
+    text-transform: capitalize;
+    text-align: center;
 }
 
-.delete-btn,
-.option-btn,
-.btn {
-    width: 100%;
-}
 
 .inline-btn,
 .inline-option-btn,
 .inline-delete-btn {
-    margin-right: .5rem;
+    display: inline-block;
+    margin-right: 1rem;
 }
+
+.btn,
+.delete-btn,
+.option-btn {
+    display: block;
+    width: 100%;
+}
+
 
 .inline-btn,
 .btn {
@@ -127,7 +138,7 @@ section {
 
 .inline-delete-btn,
 .delete-btn {
-    background-color: var(--red)ß;
+    background-color: var(--red);
 }
 
 .btn:hover,
@@ -150,6 +161,20 @@ section {
     text-transform: capitalize;
     color: var(--black);
     font-size: 3rem;
+}
+
+
+.empty {
+    border: var(--border);
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding: 1.5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 2rem;
+    text-transform: capitalize;
+    color: var(--red);
+    box-shadow: var(--box-shadow);
 }
 
 .header {
@@ -281,6 +306,7 @@ header .navbar a:hover i {
     color: var(--light-color);
 }
 
+
 /* ログインページ */
 .form-container {
     min-height: 100vh;
@@ -361,11 +387,105 @@ header .navbar a:hover i {
     border: var(--border);
 }
 
-.post-editor textarea {
+.post-editor form textarea {
     resize: none;
     height: 40rem;
 
 }
+
+.post-editor form .image {
+    width: 100%;
+    height: 20rem;
+    object-fit: contain;
+    margin: 1rem 0;
+}
+
+/* 一覧ページ */
+.show-posts .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 33rem);
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.show-posts .box-container .box {
+    background-color: var(--white);
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.show-posts .box-container .box .image {
+    height: 20rem;
+    width: 100%;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.show-posts .box-container .box .status {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    color: var(--white);
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.show-posts .box-container .box .title {
+    font-size: 2rem;
+    color: var(--black);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: .5rem 0;
+    min-width: 100%;
+}
+
+.show-posts .box-container .box .posts-content {
+    font-size: 1.7rem;
+    color: var(--light-color);
+    line-height: 1.5rem;
+    padding: 1rem 0;
+}
+
+.show-posts .box-container .box .posts-content::after {
+    content: '...';
+}
+
+.show-posts .box-container .box .icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: var(--light-bg);
+    border-radius: .5rem;
+    padding: 1.5rem 2rem;
+    border: var(--border);
+    margin: .5rem 0;
+}
+
+.show-posts .box-container .box .icons div {
+    font-size: 1.8rem;
+}
+
+.show-posts .box-container .box .icons div span {
+    color: var(--main-color);
+}
+
+.show-posts .box-container .box .icons div i {
+    color: var(--light-color);
+    margin-right: .5rem;
+}
+
+
+
+
+
+
 /* media queries starts */
 @media (max-width:991px) {
     html {

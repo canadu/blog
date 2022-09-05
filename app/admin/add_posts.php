@@ -119,6 +119,10 @@ function Post(string $id, string $param_status, PDO $conn)
         </form>
     </section>
 
+
+    <!-- custom js file link  -->
+    <script src="../js/admin_script.js"></script>
+
 </body>
 
 </html>

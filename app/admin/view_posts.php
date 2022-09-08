@@ -45,6 +45,10 @@ if (isset($_POST['delete'])) {
 
     <section class="show-posts">
         <h1 class="heading">投稿</h1>
+        <form action="search_page.php" method="POST" class="search-form">
+            <input type="text" placeholder="検索" required maxlength="100" name="search_box">
+            <button class="fas fa-search" type="submit" name="search_btn"></button>
+        </form>
         <div class="box-container">
             <?php
             //対象管理者の投稿を取得して表示する

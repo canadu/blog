@@ -115,7 +115,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_likes; ?></h3>
                 <p>総いいね数</p>
-                <a href="view_posts.php" class="btn">公開されている投稿を見る</a>
+                <a href="view_posts.php" class="btn">投稿を見る</a>
             </div>
 
         </div>

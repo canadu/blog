@@ -52,7 +52,7 @@ if (isset($_POST['delete'])) {
 
                 $search_box = $_POST['search_box'];
                 //対象管理者の投稿を取得して表示する
-                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? title LIKE ''%{$search_box}%");
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and title LIKE " . "'%{$search_box}%'");
                 $select_posts->execute([$admin_id]);
 
                 if ($select_posts->rowCount() > 0) {

@@ -72,28 +72,28 @@ if (isset($_POST['delete'])) {
                         <p>管理者ID:<span><?php echo $fetch_accounts['id']; ?></span></p>
                         <p>ユーザー名:<span><?php echo $fetch_accounts['name']; ?></span></p>
                         <p>総投稿数:<span><?php echo $total_admin_posts; ?></span></p>
-                        <div class="flex-btn">
-                            <?php
-                            if ($fetch_accounts['id'] == $admin_id) :
-                            ?>
-                                <a href="update_profile.php" class="option-btn" style="margin-bottom: .5rem;">更新</a>
-                                <form action="" method="POST">
+                        <form action="" method="POST">
+                            <div class="flex-btn">
+                                <?php
+                                if ($fetch_accounts['id'] == $admin_id) :
+                                ?>
+                                    <a href="update_profile.php" class="option-btn" style="margin-bottom: .5rem;">更新</a>
                                     <input type="hidden" name="post_id" value="<?php echo $fetch_accounts['id']; ?>" on>
                                     <button type="submit" name="delete" onclick="return confirm('アカウントを削除しますか？');" class="delete-btn" style="margin-bottom:.5rem;">削除</button>
-                                </form>
-                            <?php endif; ?>
-                        </div>
+                                <?php endif; ?>
+                        </form>
                     </div>
-            <?php
+        </div>
+<?php
                 }
             } else {
                 echo '<p class="empty">利用できるアカウントはありません。</p>';
             }
-            ?>
-        </div>
+?>
+</div>
     </section>
     <!-- admins accounts section ends -->
-
+    <script src="../js/admin_script.js"></script>
 </body>
 
 </html>

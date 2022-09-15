@@ -1,5 +1,8 @@
 <?php
-@include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
@@ -54,9 +57,9 @@ if (!isset($admin_id)) {
                 $select_active_posts->execute([$admin_id, 'active']);
                 $number_of_active_posts = $select_active_posts->rowCount();
                 ?>
-                <h3><?php echo $number_of_posts; ?></h3>
+                <h3><?php echo $number_of_active_posts; ?></h3>
                 <p>公開件数</p>
-                <a href="view_posts.php" class="btn">公開されている投稿を見る</a>
+                <a href="view_posts.php?status=active" class="btn">公開されている投稿</a>
             </div>
 
             <!-- 非公開な投稿  -->
@@ -68,7 +71,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_deactive_posts; ?></h3>
                 <p>非公開件数</p>
-                <a href="view_posts.php" class="btn">非公開な投稿を見る</a>
+                <a href="view_posts.php?status=deactive" class="btn">非公開の投稿</a>
             </div>
 
             <!-- ユーザーアカウント -->
@@ -80,7 +83,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_users; ?></h3>
                 <p>ユーザーアカウント</p>
-                <a href="users_accounts.php" class="btn">ユーザーを見る</a>
+                <a href="users_accounts.php" class="btn">ユーザーを確認</a>
             </div>
 
             <!-- 管理者アカウント  -->
@@ -92,7 +95,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_admins; ?></h3>
                 <p>管理者アカウント</p>
-                <a href="users_accounts.php" class="btn">管理者を見る</a>
+                <a href="admin_accounts.php" class="btn">管理者を確認</a>
             </div>
 
             <!-- コメント  -->
@@ -104,7 +107,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_comments; ?></h3>
                 <p>総コメント数</p>
-                <a href="comments.php" class="btn">コメントを見る</a>
+                <a href="comments.php" class="btn">コメントを確認</a>
             </div>
             <!-- いいね  -->
             <div class="box">
@@ -115,7 +118,7 @@ if (!isset($admin_id)) {
                 ?>
                 <h3><?php echo $number_of_likes; ?></h3>
                 <p>総いいね数</p>
-                <a href="view_posts.php" class="btn">投稿を見る</a>
+                <a href="view_posts.php" class="btn">投稿を確認</a>
             </div>
 
         </div>

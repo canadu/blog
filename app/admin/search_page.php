@@ -1,5 +1,8 @@
 <?php
-@include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 $admin_id = $_SESSION['admin_id'];
 if (!isset($admin_id)) {
@@ -8,7 +11,7 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['delete'])) {
     //削除処理
-    $p_id = htmlspecialchars($_POST['post_id'], ENT_QUOTES);
+    $p_id = h($_POST['post_id']);
     $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = ?");
     $delete_image->execute([$p_id]);
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
@@ -43,16 +46,21 @@ if (isset($_POST['delete'])) {
     <section class="show-posts">
         <h1 class="heading">投稿</h1>
         <form action="search_page.php" method="POST" class="search-form">
-            <input type="text" placeholder="検索" required maxlength="100" name="search_box">
+            <input type="text" placeholder="検索" maxlength="100" name="search_box">
             <button class="fas fa-search" name="search_btn"></button>
         </form>
         <div class="box-container">
             <?php
+
             if (isset($_POST['search_box']) or isset($_POST['search_btn'])) {
 
                 $search_box = $_POST['search_box'];
                 //対象管理者の投稿を取得して表示する
-                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and title LIKE " . "'%{$search_box}%'");
+                if (empty($search_box)) {
+                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
+                } else {
+                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and title LIKE " . "'%{$search_box}%'");
+                }
                 $select_posts->execute([$admin_id]);
 
                 if ($select_posts->rowCount() > 0) {
@@ -66,6 +74,7 @@ if (isset($_POST['delete'])) {
                         $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = ?");
                         $count_post_likes->execute([$post_id]);
                         $total_post_likes = $count_post_likes->rowCount();
+
             ?>
                         <form method="post" class="box">
                             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">

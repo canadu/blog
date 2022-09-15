@@ -1,5 +1,7 @@
 <?php
-include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
 
 session_start();
 
@@ -12,17 +14,17 @@ if (!isset($admin_id)) {
 if (isset($_POST['save'])) {
     //編集
     $post_id = $_GET['id'];
-    $title = htmlspecialchars($_POST['title'], ENT_QUOTES);
-    $content = htmlspecialchars($_POST['content'], ENT_QUOTES);
-    $category = htmlspecialchars($_POST['category'], ENT_QUOTES);
-    $status = htmlspecialchars($_POST['status'], ENT_QUOTES);
+    $title = h($_POST['title']);
+    $content = h($_POST['content']);
+    $category = h($_POST['category']);
+    $status = h($_POST['status']);
 
     $update_post = $conn->prepare("UPDATE posts SET title=?, content=?, category=?, status=? WHERE id=?");
     $update_post->execute([$title, $content, $category, $status, $post_id]);
     $message[] = '更新しました。';
 
     $old_image = $_POST['old_image'];
-    $image = htmlspecialchars($_FILES['image']['name'], ENT_QUOTES);
+    $image = h($_FILES['image']['name']);
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = '../uploaded_img/' . $image;
@@ -109,7 +111,7 @@ if (isset($_POST['delete_image'])) {
 
                     <p>投稿ステータス <span>*</span></p>
                     <select name="status" class="box" required>
-                        option value="<?php echo $fetch_posts['status']; ?>" selected><?php echo $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></option>
+                        <option value="<?php echo $fetch_posts['status']; ?>" selected><?php echo $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></option>
                         <option value="active">公開</option>
                         <option value="deactive">非公開</option>
                     </select>
@@ -122,28 +124,12 @@ if (isset($_POST['delete_image'])) {
 
                     <p>投稿カテゴリ<span>*</span></p>
                     <select name="category" class="box" required>
-                        <option value="<?php echo $fetch_posts['category']; ?>" selected><?php echo $fetch_posts['category']; ?></option>
-                        <option value="nature">自然</option>
-                        <option value="education">教育</option>
-                        <option value="pets and animals">ペットや動物</option>
-                        <option value="technology">テクノロジー</option>
-                        <option value="fashion">ファッション</option>
-                        <option value="entertainment">娯楽</option>
-                        <option value="movies and animations">映画</option>
-                        <option value="gaming">ゲーム</option>
-                        <option value="music">音楽</option>
-                        <option value="sports">スポーツ</option>
-                        <option value="news">ニュース</option>
-                        <option value="travel">旅行</option>
-                        <option value="comedy">お笑い</option>
-                        <option value="design and development">デザインや開発</option>
-                        <option value="food and drinks">食べ物</option>
-                        <option value="lifestyle">生活</option>
-                        <option value="personal">人物</option>
-                        <option value="health and fitness">健康</option>
-                        <option value="business">仕事</option>
-                        <option value="shopping">買い物</option>
-                        <option value="animations">アニメ</option>
+                        <option value="<?php echo $fetch_posts['category']; ?>" selected><?php echo $category_array[$fetch_posts['category']]; ?></option>
+                        <?php foreach ($category_array as $key => $value) { ?>
+                            <?php if ($key != $fetch_posts['category']) : ?>
+                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                            <?php endif; ?>
+                        <?php } ?>
                     </select>
 
                     <p>投稿画像</p>

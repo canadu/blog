@@ -1,6 +1,7 @@
 <?php
 
-include '../components/connect.php';
+require_once '../components/functions.php';
+require_once '../components/connect.php';
 session_start();
 
 $message = [];
@@ -13,9 +14,9 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['submit'])) {
 
-    $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-    $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
-    $confirm_pass = htmlspecialchars($_POST['confirm_pass'], ENT_QUOTES);
+    $name = h($_POST['name']);
+    $pass = h($_POST['pass']);
+    $confirm_pass = h($_POST['confirm_pass']);
 
     //同一ユーザー名の存在チェック
     $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
@@ -65,7 +66,7 @@ if (isset($_POST['submit'])) {
         </form>
     </section>
     <!-- admin register form section ends -->
-
+    <script src="../js/admin_script.js"></script>
 </body>
 
 </html>

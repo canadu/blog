@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400&display=swap');
 
 :root {
-    --main-color: #4834d4;
+    --main-color: #6C757D;
     --red: #e74c3c;
-    --orange: #f39c12;
+    --orange: #0D6EFD;
     --black: #34495e;
     --white: #fff;
     --light-color: #999;
@@ -493,7 +493,8 @@ header .navbar a:hover i {
     padding: 1.5rem;
     border: var(--border);
 }
-.show-posts .search-form input{
+
+.show-posts .search-form input {
     width: 100%;
     font-size: 2rem;
     color: var(--black);
@@ -501,7 +502,7 @@ header .navbar a:hover i {
 
 .show-posts .search-form button {
     cursor: pointer;
-    color:var(--black);
+    color: var(--black);
     font-size: 2rem;
     background: none;
 }
@@ -517,30 +518,30 @@ header .navbar a:hover i {
 .accounts .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, 33rem);
-    gap:1.5rem;
+    gap: 1.5rem;
     justify-content: center;
     align-items: flex-start;
 }
 
 
-.accounts .box-container .box{
-   background-color: var(--white);
-   border-radius: .5rem;
-   box-shadow: var(--box-shadow);
-   border:var(--border);
-   padding:1rem 2rem;
-   text-align: center;
+.accounts .box-container .box {
+    background-color: var(--white);
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    padding: 1rem 2rem;
+    text-align: center;
 }
 
-.accounts .box-container .box p{
-   margin: .5rem 0;
-   font-size: 1.8rem;
-   color:var(--black);
-   line-height: 1.5;
+.accounts .box-container .box p {
+    margin: .5rem 0;
+    font-size: 1.8rem;
+    color: var(--black);
+    line-height: 1.5;
 }
 
-.accounts .box-container .box p span{
-   color:var(--main-color);
+.accounts .box-container .box p span {
+    color: var(--main-color);
 }
 
 /* 記事閲覧ページ */
@@ -560,7 +561,7 @@ header .navbar a:hover i {
     display: inline-block;
 }
 
-.read-post form .image ~{
+.read-post form .image~ {
     width: 100%;
     border-radius: .5rem;
     margin-top: 1.5rem;
@@ -588,17 +589,19 @@ header .navbar a:hover i {
     border: var(--border);
     background-color: var(--line-bg);
     padding: 1.5rem 2rem;
-    margin:1rem 0;
+    margin: 1rem 0;
 }
 
 .read-post form .icons div {
     font-size: 1.8rem;
 }
+
 .read-post form .icons span {
     color: var(--main-color);
 }
+
 .read-post form .icons i {
-    color:var(--light-color);
+    color: var(--light-color);
     margin-right: .5rem;
 }
 
@@ -620,7 +623,7 @@ header .navbar a:hover i {
     border: var(--border);
     padding: 2rem;
     display: grid;
-    gap:2rem;
+    gap: 2rem;
 }
 
 .comments .box-container .box {
@@ -634,10 +637,12 @@ header .navbar a:hover i {
     font-size: 2rem;
     color: var(--light-color);
 }
+
 .comments .box-container .post-title span {
     color: var(--black);
 }
-.comments .box-container .post-title a  {
+
+.comments .box-container .post-title a {
     color: var(--main-color);
     margin-left: .5rem;
 }
@@ -650,11 +655,11 @@ header .navbar a:hover i {
 .comments .box-container .box .user {
     display: flex;
     align-items: center;
-    gap:1rem;
+    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.comments .box-container .box .user i{
+.comments .box-container .box .user i {
     font-size: 2rem;
     border-radius: .5rem;
     border: var(--border);
@@ -685,7 +690,7 @@ header .navbar a:hover i {
     background-color: var(--white);
     border-radius: .5rem;
     padding: 1.5rem;
-    margin:.5rem 0 ;
+    margin: .5rem 0;
     border: var(--border);
 }
 

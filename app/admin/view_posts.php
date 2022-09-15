@@ -1,5 +1,8 @@
 <?php
-include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 $admin_id = $_SESSION['admin_id'];
 
@@ -9,7 +12,7 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['delete'])) {
     //削除処理
-    $p_id = htmlspecialchars($_POST['post_id'], ENT_QUOTES);
+    $p_id = h($_POST['post_id']);
     $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = ?");
     $delete_image->execute([$p_id]);
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
@@ -21,6 +24,10 @@ if (isset($_POST['delete'])) {
     $delete_post->execute([$p_id]);
     $delete_comments = $conn->prepare("DELETE FROM comments WHERE post_id = ?");
     $message[] = '投稿を削除しました。';
+}
+
+if (isset($_GET['status'])) {
+    $status = $_GET['status'];
 }
 
 ?>
@@ -46,13 +53,17 @@ if (isset($_POST['delete'])) {
     <section class="show-posts">
         <h1 class="heading">投稿</h1>
         <form action="search_page.php" method="POST" class="search-form">
-            <input type="text" placeholder="検索" required maxlength="100" name="search_box">
+            <input type="text" placeholder="検索" maxlength="100" name="search_box">
             <button class="fas fa-search" type="submit" name="search_btn"></button>
         </form>
         <div class="box-container">
             <?php
             //対象管理者の投稿を取得して表示する
-            $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
+            if (!empty($status) && ($status == 'active' || $status == 'deactive')) {
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and status='{$status}'");
+            } else {
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
+            }
             $select_posts->execute([$admin_id]);
             if ($select_posts->rowCount() > 0) {
                 while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
@@ -72,9 +83,9 @@ if (isset($_POST['delete'])) {
                             <img src="../uploaded_img/<?php echo $fetch_posts['image']; ?>" class="image" alt="">
                         <?php endif; ?>
                         <div class="status" style="background-color:<?php if ($fetch_posts['status'] == 'active') {
-                                                                        echo 'limegreen';
+                                                                        echo '#FFC107';
                                                                     } else {
-                                                                        echo 'coral';
+                                                                        echo '#6C757D';
                                                                     }; ?>;"><?= $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></div>
                         <div class="title"><?= $fetch_posts['title']; ?></div>
                         <div class="posts-content"><?php echo $fetch_posts['content']; ?></div>

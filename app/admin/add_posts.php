@@ -1,6 +1,8 @@
 <?php
 
-include '../components/connect.php';
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 
 define('STATUS', array('active', 'deactive'));
@@ -23,10 +25,10 @@ if (isset($_POST['draft'])) {
 function Post(string $id, string $param_status, PDO $conn)
 {
     global $message;
-    $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-    $title = htmlspecialchars($_POST['title'], ENT_QUOTES);
-    $content = htmlspecialchars($_POST['content'], ENT_QUOTES);
-    $category = htmlspecialchars($_POST['category'], ENT_QUOTES);
+    $name = h($_POST['name']);
+    $title = h($_POST['title']);
+    $content = h($_POST['content']);
+    $category = h($_POST['category']);
     $status = $param_status;
 
     $image = htmlspecialchars($_FILES['image']['name'], ENT_QUOTES);
@@ -88,27 +90,9 @@ function Post(string $id, string $param_status, PDO $conn)
             <p>投稿カテゴリ<span>*</span></p>
             <select name="category" class="box" required>
                 <option value="" selected disabled>-- カテゴリを選択</option>
-                <option value="nature">自然</option>
-                <option value="education">教育</option>
-                <option value="pets and animals">ペットや動物</option>
-                <option value="technology">テクノロジー</option>
-                <option value="fashion">ファッション</option>
-                <option value="entertainment">娯楽</option>
-                <option value="movies and animations">映画</option>
-                <option value="gaming">ゲーム</option>
-                <option value="music">音楽</option>
-                <option value="sports">スポーツ</option>
-                <option value="news">ニュース</option>
-                <option value="travel">旅行</option>
-                <option value="comedy">お笑い</option>
-                <option value="design and development">デザインや開発</option>
-                <option value="food and drinks">食べ物</option>
-                <option value="lifestyle">生活</option>
-                <option value="personal">人物</option>
-                <option value="health and fitness">健康</option>
-                <option value="business">仕事</option>
-                <option value="shopping">買い物</option>
-                <option value="animations">アニメ</option>
+                <?php foreach ($category_array as $key => $value) { ?>
+                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                <?php } ?>
             </select>
             <p>投稿画像</p>
             <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
@@ -118,8 +102,6 @@ function Post(string $id, string $param_status, PDO $conn)
             </div>
         </form>
     </section>
-
-
     <!-- custom js file link  -->
     <script src="../js/admin_script.js"></script>
 

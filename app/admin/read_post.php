@@ -1,5 +1,7 @@
 <?php
-include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
 
 session_start();
 
@@ -14,7 +16,7 @@ $get_id = $_GET['post_id'];
 
 if (isset($_POST['delete'])) {
     //削除処理
-    $p_id = htmlspecialchars($_POST['post_id'], ENT_QUOTES);
+    $p_id = h($_POST['post_id']);
     $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = ?");
     $delete_image->execute([$p_id]);
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
@@ -29,7 +31,7 @@ if (isset($_POST['delete'])) {
 }
 
 if (isset($_POST['delete_comment'])) {
-    $comment_id = htmlspecialchars($_POST['comment_id'], ENT_QUOTES);
+    $comment_id = h($_POST['comment_id']);
     $delete_comment = $conn->prepare("DELETE FROM `comments` WHERE id = ?");
     $delete_comment->execute([$comment_id]);
     $message[] = 'コメントを削除しました。';
@@ -76,9 +78,9 @@ if (isset($_POST['delete_comment'])) {
                         <img src="../uploaded_img/<?php echo $fetch_posts['image']; ?>" class="image" alt="">
                     <?php } ?>
                     <div class="status" style="background-color:<?php if ($fetch_posts['status'] == 'active') {
-                                                                    echo 'limegreen';
+                                                                    echo '#FFC107';
                                                                 } else {
-                                                                    echo 'coral';
+                                                                    echo '#6C757D';
                                                                 }; ?>;"><?= $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></div>
                     <div class="title"><?= $fetch_posts['title']; ?></div>
                     <div class="content"><?php echo $fetch_posts['content']; ?></div>

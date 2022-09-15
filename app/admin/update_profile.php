@@ -1,6 +1,8 @@
 <?php
 
-include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
 
 session_start();
 $admin_id = $_SESSION['admin_id'];
@@ -13,7 +15,7 @@ if (!isset($admin_id)) {
 if (isset($_POST['submit'])) {
 
     //ユーザー名の更新
-    $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
+    $name = h($_POST['name']);
     if (!empty($name)) {
         $select_name = $conn->prepare("SELECT * FROM admin WHERE name = ?");
         $select_name->execute([$name]);
@@ -33,9 +35,9 @@ if (isset($_POST['submit'])) {
     $fetch_prev_pass = $select_old_pass->fetch(PDO::FETCH_ASSOC);
     $prev_pass = $fetch_prev_pass['password'];
 
-    $old_pass = htmlspecialchars($_POST['old_pass'], ENT_QUOTES);
-    $new_pass = htmlspecialchars($_POST['new_pass'], ENT_QUOTES);
-    $confirm_pass = htmlspecialchars($_POST['confirm_pass'], ENT_QUOTES);
+    $old_pass = h($_POST['old_pass']);
+    $new_pass = h($_POST['new_pass']);
+    $confirm_pass = h($_POST['confirm_pass']);
 
     if (!empty($old_pass)) {
         if (!password_verify($old_pass, $prev_pass)) {
@@ -82,7 +84,7 @@ if (isset($_POST['submit'])) {
     </section>
 
     <!-- admin profile update section ends -->
-
+    <script src="../js/admin_script.js"></script>
 </body>
 
 </html>

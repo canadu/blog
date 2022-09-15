@@ -1,14 +1,16 @@
 <?php
 
-include '../components/connect.php';
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 
 $message = [];
 
 if (isset($_POST['submit'])) {
 
-  $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-  $pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
+  $name = h($_POST['name']);
+  $pass = h($_POST['pass']);
 
   $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
   $select_admin->execute([$name]);
@@ -66,7 +68,7 @@ if (isset($_POST['submit'])) {
     </form>
   </section>
   <!-- admin login form section ends -->
-
+  <script src="../js/admin_script.js"></script>
 </body>
 
 </html>

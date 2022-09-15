@@ -1,5 +1,8 @@
 <?php
-include '../components/connect.php';
+
+require_once '../components/functions.php';
+require_once '../components/connect.php';
+
 session_start();
 $admin_id = $_SESSION['admin_id'];
 

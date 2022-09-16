@@ -82,9 +82,9 @@ if (isset($_POST['delete'])) {
                                 <img src="../uploaded_img/<?php echo $fetch_posts['image']; ?>" class="image" alt="">
                             <?php endif; ?>
                             <div class="status" style="background-color:<?php if ($fetch_posts['status'] == 'active') {
-                                                                            echo 'limegreen';
+                                                                            echo '#FFC107';
                                                                         } else {
-                                                                            echo 'coral';
+                                                                            echo '#6C757D';
                                                                         }; ?>;"><?= $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></div>
                             <div class="title"><?= $fetch_posts['title']; ?></div>
                             <div class="posts-content"><?php echo $fetch_posts['content']; ?></div>

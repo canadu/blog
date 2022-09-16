@@ -1,5 +1,7 @@
 <?php
 
+define('STATUS', array('active', 'deactive'));
+
 $category_array = array(
   'education' => '教育',
   'animals' => 'ペットや動物',

@@ -3,7 +3,8 @@
 :root {
     --main-color: #6C757D;
     --red: #e74c3c;
-    --orange: #0D6EFD;
+    --green: #198754;
+    --blue: #3F6AD8;
     --black: #34495e;
     --white: #fff;
     --light-color: #999;
@@ -87,11 +88,6 @@ section {
     color: var(--black);
 }
 
-
-
-
-
-
 .btn,
 .option-btn,
 .delete-btn,
@@ -128,18 +124,23 @@ section {
 
 .inline-btn,
 .btn {
-    background-color: var(--main-color);
+    background-color: var(--green);
 }
 
 .inline-option-btn,
 .option-btn {
-    background-color: var(--orange);
+    background-color: var(--blue);
 }
+
 
 .inline-delete-btn,
 .delete-btn {
     background-color: var(--red);
 }
+
+/* .btn:hover {
+    background-color: #21b06c;
+} */
 
 .btn:hover,
 .option-btn:hover,

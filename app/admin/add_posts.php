@@ -5,8 +5,8 @@ require_once '../components/connect.php';
 
 session_start();
 
-define('STATUS', array('active', 'deactive'));
 $admin_id = $_SESSION['admin_id'];
+
 $message = [];
 if (!isset($admin_id)) {
     header('location:admin_login.php');

@@ -48,32 +48,30 @@ if (isset($_POST['delete_comment'])) {
                     $select_posts->execute([$fetch_comments['post_id']]);
                     while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                        <div class="post-title">from : <span><?php echo $fetch_posts['title']; ?></span>a href="read_post.php?post_id=<?php echo $fetch_posts['id']; ?>" >view post</a>
-                            << /div>
-                            <?php
-                        }
-                            ?>
-                            <div class="box">
-                                <div class="user">
-                                    <i class="fas fa-user">
-                                        <div class="user-info">
-                                            <span><?php echo $fetch_comments['user_name']; ?></span>
-                                            <span><?php echo $fetch_comments['date']; ?></span>
-                                        </div>
-                                    </i>
+                        <div class="post-title">from : <span><?php echo $fetch_posts['title']; ?></span><a href="read_post.php?post_id=<?php echo $fetch_posts['id']; ?>">投稿を閲覧</a>
+                        <?php
+                    }
+                        ?>
+                        <div class="box">
+                            <div class="user">
+                                <i class="fas fa-user"></i>
+                                <div class="user-info">
+                                    <span><?php echo $fetch_comments['user_name']; ?></span>
+                                    <span><?php echo $fetch_comments['date']; ?></span>
                                 </div>
-                                <div class="text"><?php echo $fetch_comments['comment'] ?></div>
-                                <form action="" method="POST">
-                                    <input type="hidden" name="comment_id" value="<?php echo $fetch_comments['id']; ?>">
-                                    <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('コメントを削除しますか?');">コメント削除</button>
-                                </form>
                             </div>
-                    <?php
+                            <div class="text"><?php echo $fetch_comments['comment'] ?></div>
+                            <form action="" method="POST">
+                                <input type="hidden" name="comment_id" value="<?php echo $fetch_comments['id']; ?>">
+                                <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('コメントを削除しますか?');">コメント削除</button>
+                            </form>
+                        </div>
+                <?php
                 }
             } else {
                 echo '<p class="empty">コメントはまだありません</p>';
             }
-                    ?>
+                ?>
                         </div>
     </section>
 

@@ -83,7 +83,7 @@ require_once 'components/like_post.php';
       </div>
 
       <div class="box">
-        <p>著者</p>
+        <p>管理者</p>
         <div class="flex-box">
           <?php
           $select_authors = $conn->prepare("SELECT DISTINCT name FROM admin LIMIT 10");
@@ -101,6 +101,7 @@ require_once 'components/like_post.php';
           <a href="authors.php" class="btn">全て見る</a>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -163,6 +164,7 @@ require_once 'components/like_post.php';
       ?>
     </div>
   </section>
+  <script src="js/script.js"></script>
 </body>
 
 </html>

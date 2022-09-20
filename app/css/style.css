@@ -340,7 +340,7 @@ section {
 }
 
 .form-container form p a {
-   color: var(--orange);
+   color: var(--blue);
 }
 
 .form-container form p a:hover {

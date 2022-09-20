@@ -31,7 +31,7 @@ if (isset($message)) {
       <a href="home.php"><i class="fas fa-angle-right"></i>ホーム</a>
       <a href="posts.php"><i class="fas fa-angle-right"></i>投稿</a>
       <a href="all_category.php"><i class="fas fa-angle-right"></i>カテゴリ</a>
-      <a href="authors.php"><i class="fas fa-angle-right"></i>著者</a>
+      <a href="authors.php"><i class="fas fa-angle-right"></i>管理者</a>
       <a href="login.php"><i class="fas fa-angle-right"></i>ログイン</a>
       <a href="register.php"><i class="fas fa-angle-right"></i>登録</a>
     </nav>
@@ -42,18 +42,22 @@ if (isset($message)) {
       $select_profile->execute([$user_id]);
       if ($select_profile->rowCount() > 0) {
         $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
+      ?>
+        <p class="name"><?php echo $fetch_profile['name']; ?></p>
+        <a href="update.php" class="btn">プロフィールを更新</a>
+        <div class="flex-btn">
+          <a href="login.php" class="option-btn">ログイン</a>
+          <a href="register.php" class="option-btn">登録</a>
+        </div>
+        <a href="components/user_logout.php" onclick="return confirm('サイトからログアウトしますか？');" class="delete-btn">ログアウト</a>
+      <?php
+      } else {
+      ?>
+        <p class="name">最初にログインしてください</p>
+        <a href="login.php" class="option-btn">ログイン</a>
+      <?php
       }
       ?>
-      <p class="name"><?php echo $fetch_profile['name']; ?></p>
-      <a href="update.php" class="btn">プロフィールを更新</a>
-      <div class="flex-btn">
-        <a href="login.php" class="option-btn">ログイン</a>
-        <a href="register.php" class="option-btn">登録</a>
-      </div>
     </div>
-    <a href="components/admin_logout.php" style="color:var(--red);" onclick="return confirm('サイトからログアウトしますか？');" class="delete-btn">ログアウト</a>
-
-
-
   </section>
 </header>

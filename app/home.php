@@ -56,8 +56,8 @@ require_once 'components/like_post.php';
           <p>総いいね : <span><?php echo $total_user_likes; ?></span></p>
           <a href="update.php" class="btn">プロフィールを更新</a>
           <div class="flex-btn">
-            <a href="user_likes.php" class="option_btn">いいね</a>
-            <a href="user_comments.php" class="option_btn">コメント</a>
+            <a href="user_likes.php" class="option-btn">いいね</a>
+            <a href="user_comments.php" class="option-btn">コメント</a>
           </div>
         <?php
         } else {

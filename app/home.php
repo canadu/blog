@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 require_once 'components/like_post.php';
-
+$disp_category_count = 0;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -76,7 +76,10 @@ require_once 'components/like_post.php';
         <p>カテゴリー</p>
         <div class="flex-box">
           <?php foreach ($category_array as $key => $value) { ?>
-            <a href="category.php?category=<?php echo $key; ?>" class="links"><?php echo $value; ?></a>
+            <?php if ($disp_category_count < 5) : ?>
+              <a href="category.php?category=<?php echo $key; ?>" class="links"><?php echo $value; ?></a>
+            <?php endif; ?>
+            <?php $disp_category_count++; ?>
           <?php } ?>
           <a href="all_category.php" class="btn">全て見る</a>
         </div>

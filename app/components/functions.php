@@ -27,5 +27,5 @@ $category_array = array(
 
 function h($str)
 {
-  return htmlspecialchars($str, ENT_QUOTES);
+  return htmlspecialchars(strval($str), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }

@@ -1,7 +1,6 @@
 <?php
-
-require_once 'components/functions.php';
 require_once 'components/connect.php';
+require_once 'components/functions.php';
 
 session_start();
 
@@ -10,6 +9,13 @@ if (isset($_SESSION['user_id'])) {
 } else {
   $user_id = '';
 }
+
+if (isset($_GET['author'])) {
+  $author = $_GET['author'];
+} else {
+  $author = '';
+}
+
 require_once 'components/like_post.php';
 ?>
 
@@ -20,7 +26,7 @@ require_once 'components/like_post.php';
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>管理者</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,11 +34,11 @@ require_once 'components/like_post.php';
 <body>
   <?php include 'components/user_header.php'; ?>
   <section class="posts-container">
-    <h1 class="heading">最近の投稿</h1>
+
     <div class="box-container">
       <?php
-      $select_posts = $conn->prepare("SELECT * FROM posts WHERE status = ?");
-      $select_posts->execute(['active']);
+      $select_posts = $conn->prepare("SELECT * FROM posts WHERE name = ? AND status = ?");
+      $select_posts->execute([$author, 'active']);
       if ($select_posts->rowCount() > 0) {
         while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
 
@@ -50,10 +56,10 @@ require_once 'components/like_post.php';
           $total_post_comments = $count_post_comments->rowCount();
 
           $confirm_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = ? AND post_id = ?");
-          $confirm_likes->execute([$user_id,   $post_id]);
+          $confirm_likes->execute([$user_id, $post_id]);
       ?>
 
-          <form method="post" class="box">
+          <form action="post" class="box">
             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
             <input type="hidden" name="admin_id" value="<?php echo $fetch_posts['admin_id']; ?>">
 
@@ -73,10 +79,10 @@ require_once 'components/like_post.php';
             <div class="post-content content-150"><?php echo $fetch_posts['content']; ?></div>
             <a href="view_post.php?post_id=<?php echo $post_id ?>" class="inline-btn">もっと見る</a>
             <div class="icons">
-              <a href="view_post.php?post_id=<?php echo $post_id; ?>"><i class="fas fa-comment"></i><span>(<?php echo $total_post_likes; ?>)</span></a>
-              <button type="submit" name="like_post"><i class="fas fa-heart" style="<?php if ($total_post_likes > 0 and $user_id != '') {
-                                                                                      echo 'color:red;';
-                                                                                    }; ?>"></i><span>(<?= $total_post_likes; ?>)</span></button>
+              <a href="view_post.php?post_id=<?php echo $post_id; ?>"><i class="fas fa-comment"></i><span>(<?php echo $total_post_comments; ?>)</span></a>
+              <button type="submit" name="like_post"><i class="fas fa-heart" style="<?php if ($confirm_likes->rowCount() > 0) {
+                                                                                      echo 'color:var(--red);';
+                                                                                    } ?>  "></i><span>(<?= $total_post_likes; ?>)</span></button>
             </div>
           </form>
       <?php

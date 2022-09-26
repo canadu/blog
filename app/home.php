@@ -149,7 +149,7 @@ $disp_category_count = 0;
             <div class="post-title"><?php echo $fetch_posts['title']; ?></div>
             <div class="post-content content-150"><?php echo $fetch_posts['content']; ?></div>
             <a href="view_post.php?post_id=<?php echo $post_id; ?>" class="inline-btn">続きを読む</a>
-            <a href="category.php?category=<?php echo $fetch_posts['category']; ?>" class="post-cat"><i class="fas fa-tag"></i><span><?php echo $fetch_posts['category']; ?></span></span></a>
+            <a href="category.php?category=<?php echo $fetch_posts['category']; ?>" class="post-cat"><i class="fas fa-tag"></i><span><?php echo $category_array[$fetch_posts['category']]; ?></span></span></a>
             <div class="icons">
               <!-- コメント -->
               <a href="view_post.php?post_id=<?= $post_id; ?>"><i class="fas fa-comment"></i><span>(<?= $total_post_comments; ?>)</span></a>

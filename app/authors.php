@@ -51,7 +51,7 @@ include 'components/like_post.php';
                     //コメントの件数を取得
                     $count_admin_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = ?");
                     $count_admin_comments->execute([$fetch_authors['id']]);
-                    $total_admin_comments = $count_post_comments->rowCount();
+                    $total_admin_comments = $count_admin_comments->rowCount();
 
             ?>
                     <div class="box">

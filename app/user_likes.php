@@ -64,7 +64,7 @@ include 'components/like_post.php';
                 $count_post_comments->execute([$post_id]);
                 $total_post_comments = $count_post_comments->rowCount();
       ?>
-                <form action="post" class="box">
+                <form method="POST" class="box">
                   <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
                   <input type="hidden" name="admin_id" value="<?php echo $fetch_post['admin_id']; ?>">
                   <div class="post-admin">

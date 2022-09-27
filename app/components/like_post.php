@@ -20,7 +20,7 @@ if (isset($_POST['like_post'])) {
     } else {
       //いいねが押されていない場合
       $add_like = $conn->prepare("INSERT INTO likes(user_id, post_id, admin_id) VALUES(?,?,?)");
-      $add_likes->execute([$user_id, $post_id, $admin_id]);
+      $add_like->execute([$user_id, $post_id, $admin_id]);
       $message[] = 'いいねを追加しました';
     }
   } else {

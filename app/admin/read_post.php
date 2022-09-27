@@ -74,14 +74,14 @@ if (isset($_POST['delete_comment'])) {
         ?>
                 <form method="post">
                     <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
-                    <?php if ($fetch_posts['image'] != '') { ?>
-                        <img src="../uploaded_img/<?php echo $fetch_posts['image']; ?>" class="image" alt="">
-                    <?php } ?>
                     <div class="status" style="background-color:<?php if ($fetch_posts['status'] == 'active') {
                                                                     echo '#FFC107';
                                                                 } else {
                                                                     echo '#6C757D';
                                                                 }; ?>;"><?= $fetch_posts['status'] == 'active' ? '公開' : '非公開'; ?></div>
+                    <?php if ($fetch_posts['image'] != '') { ?>
+                        <img src="../uploaded_img/<?php echo $fetch_posts['image']; ?>" class="image" alt="">
+                    <?php } ?>
                     <div class="title"><?= $fetch_posts['title']; ?></div>
                     <div class="content"><?php echo $fetch_posts['content']; ?></div>
                     <div class="icons">
@@ -127,13 +127,13 @@ if (isset($_POST['delete_comment'])) {
                             <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('コメントを削除しますか?');">コメント削除</button>
                         </form>
                     </div>
-        </div>
-<?php
+            <?php
                 }
             } else {
                 echo '<p class="empty">まだコメントはありません</p>';
             }
-?>
+            ?>
+        </div>
     </section>
     <script src="../js/admin_script.js"></script>
 </body>

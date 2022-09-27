@@ -66,7 +66,7 @@ require_once 'components/like_post.php';
             </div>
 
             <?php if ($fetch_posts['image'] != '') : ?>
-              <img src="uploaded_img/<?php echo $fetch_post['image']; ?>" class="post-image" alt="">
+              <img src="uploaded_img/<?php echo $fetch_posts['image']; ?>" class="post-image" alt="">
             <?php endif; ?>
 
             <div class="post-title"><?php echo $fetch_posts['title']; ?></div>

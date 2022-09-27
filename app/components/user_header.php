@@ -17,7 +17,7 @@ if (isset($message)) {
 
     <!-- 検索フォーム -->
     <form action="search.php" method="post" class="search-form">
-      <input type="text" name="search_box" class="box" maxlength="100" placeholder="検索" required>
+      <input type="text" name="search_box" class="box" maxlength="100" placeholder="検索">
       <button type="submit" class="fas fa-search" name="search_btn"></button>
     </form>
 
@@ -31,9 +31,9 @@ if (isset($message)) {
       <a href="home.php"><i class="fas fa-angle-right"></i>ホーム</a>
       <a href="posts.php"><i class="fas fa-angle-right"></i>投稿</a>
       <a href="all_category.php"><i class="fas fa-angle-right"></i>カテゴリ</a>
-      <a href="authors.php"><i class="fas fa-angle-right"></i>管理者</a>
-      <a href="login.php"><i class="fas fa-angle-right"></i>ログイン</a>
-      <a href="register.php"><i class="fas fa-angle-right"></i>登録</a>
+      <a href="authors.php"><i class="fas fa-angle-right"></i>管理者一覧</a>
+      <a href="login.php"><i class="fas fa-angle-right"></i>ユーザーログイン</a>
+      <a href="register.php"><i class="fas fa-angle-right"></i>ユーザー登録</a>
     </nav>
 
     <div class="profile">

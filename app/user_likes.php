@@ -48,11 +48,11 @@ include 'components/like_post.php';
           $select_posts->execute([$fetch_like['post_id']]);
 
           if ($select_posts->rowCount() > 0) {
-            while ($fetch_post = $select_posts->fetch(PDO::FETCH_ASSOC)) {
-              if ($fetch_post['status'] != 'deactive') {
+            while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
+              if ($fetch_posts['status'] != 'deactive') {
 
                 //記事が公開されている場合
-                $post_id = $fetch_post['id'];
+                $post_id = $fetch_posts['id'];
 
                 //いいねの件数を取得
                 $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = ?");
@@ -66,7 +66,7 @@ include 'components/like_post.php';
       ?>
                 <form method="POST" class="box">
                   <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
-                  <input type="hidden" name="admin_id" value="<?php echo $fetch_post['admin_id']; ?>">
+                  <input type="hidden" name="admin_id" value="<?php echo $fetch_posts['admin_id']; ?>">
                   <div class="post-admin">
                     <i class="fas fa-user"></i>
                     <div>
@@ -75,7 +75,7 @@ include 'components/like_post.php';
                     </div>
                   </div>
                   <?php if ($fetch_posts['image'] != '') : ?>
-                    <img src="uploaded_img/<?php echo $fetch_post['image']; ?>" class="post-image" alt="">
+                    <img src="uploaded_img/<?php echo $fetch_posts['image']; ?>" class="post-image" alt="">
                   <?php endif; ?>
                   <div class="post-title"><?php echo $fetch_posts['title']; ?></div>
                   <div class="post-content content-150"><?php echo $fetch_posts['content']; ?></div>

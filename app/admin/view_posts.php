@@ -18,7 +18,9 @@ if (isset($_POST['delete'])) {
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
     if ($fetch_delete_image['image'] != '') {
         //ファイルを削除
-        unlink('../uploaded_img/' . $fetch_delete_image['image']);
+        if (file_exists('../uploaded_img/' . $fetch_delete_image['image'])) {
+            unlink('../uploaded_img/' . $fetch_delete_image['image']);
+        }
     }
     $delete_post = $conn->prepare("DELETE FROM posts WHERE id = ?");
     $delete_post->execute([$p_id]);
@@ -108,7 +110,7 @@ if (isset($_GET['status'])) {
             ?>
         </div>
     </section>
-    <!-- custom js file link  -->
+
     <script src="../js/admin_script.js"></script>
 </body>
 

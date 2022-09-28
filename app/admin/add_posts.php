@@ -31,33 +31,47 @@ function Post(string $id, string $param_status, PDO $conn)
     $category = h($_POST['category']);
     $status = $param_status;
 
-    $image = htmlspecialchars($_FILES['image']['name'], ENT_QUOTES);
-    $image_size = $_FILES['image']['size'];
-    $image_tmp_name = $_FILES['image']['tmp_name'];
-    $image_folder = '../uploaded_img/' . $image;
+    list($result, $errMessage) = validateImage();
 
-    $select_image = $conn->prepare("SELECT * FROM posts WHERE image = ? AND admin_id = ?");
-    $select_image->execute([$image, $id]);
-
-    if (isset($image) && !empty($image)) {
-        if ($select_image->rowCount() > 0 and $image != '') {
-            $message[] = '画像ファイル名が同じです。';
-        } elseif ($image_size > 2000000) {
-            $message[] = '画像のファイルサイズが大きすぎます。';
-        } else {
-            move_uploaded_file($image_tmp_name, $image_folder);
-        }
+    if ($result !== true) {
+        $message[] = $errMessage;
     } else {
-        $image = '';
-    }
+        $image = htmlspecialchars($_FILES['image']['name'], ENT_QUOTES);
+        $generateImageName = generateImageName($image);
+        $imagePath = '../uploaded_img/' . $generateImageName;
+        move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
 
-    if ($select_image->rowCount() > 0 and $image != '') {
-        $message[] = '画像ファイルのファイル名を変更してください';
-    } else {
         $insert_post = $conn->prepare("INSERT INTO posts(admin_id, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
-        $insert_post->execute([$id, $name, $title, $content, $category, $image, $status]);
+        $insert_post->execute([$id, $name, $title, $content, $category, $generateImageName, $status]);
         $message[] = $param_status == STATUS[0]  ? '投稿しました。' : '下書きに保存しました。';
     }
+
+    // $image_size = $_FILES['image']['size'];
+    // $image_tmp_name = $_FILES['image']['tmp_name'];
+    // $image_folder = '../uploaded_img/' . $image;
+
+    // $select_image = $conn->prepare("SELECT * FROM posts WHERE image = ? AND admin_id = ?");
+    // $select_image->execute([$image, $id]);
+
+    // if (isset($image) && !empty($image)) {
+    //     if ($select_image->rowCount() > 0 and $image != '') {
+    //         $message[] = '画像ファイル名が同じです。';
+    //     } elseif ($image_size > 2000000) {
+    //         $message[] = '画像のファイルサイズが大きすぎます。';
+    //     } else {
+    //         move_uploaded_file($image_tmp_name, $image_folder);
+    //     }
+    // } else {
+    //     $image = '';
+    // }
+
+    // if ($select_image->rowCount() > 0 and $image != '') {
+    //     $message[] = '画像ファイルのファイル名を変更してください';
+    // } else {
+    //     $insert_post = $conn->prepare("INSERT INTO posts(admin_id, name, title, content, category, image, status) VALUES(?,?,?,?,?,?,?)");
+    //     $insert_post->execute([$id, $name, $title, $content, $category, $image, $status]);
+    //     $message[] = $param_status == STATUS[0]  ? '投稿しました。' : '下書きに保存しました。';
+    // }
 }
 
 ?>

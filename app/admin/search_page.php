@@ -12,16 +12,21 @@ if (!isset($admin_id)) {
 if (isset($_POST['delete'])) {
     //削除処理
     $p_id = h($_POST['post_id']);
-    $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = ?");
-    $delete_image->execute([$p_id]);
+    $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = :id");
+    $delete_image->bindValue(':id', $p_id, PDO::PARAM_INT);
+    $delete_image->execute();
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
     if ($fetch_delete_image['image'] != '') {
         //ファイルを削除
         unlink('../uploaded_img/' . $fetch_delete_image['image']);
     }
-    $delete_post = $conn->prepare("DELETE FROM posts WHERE id = ?");
-    $delete_post->execute([$p_id]);
-    $delete_comments = $conn->prepare("DELETE FROM comments WHERE post_id = ?");
+    $delete_post = $conn->prepare("DELETE FROM posts WHERE id = :id");
+    $delete_post->bindValue(':id', $p_id, PDO::PARAM_INT);
+    $delete_post->execute();
+
+    $delete_comments = $conn->prepare("DELETE FROM comments WHERE post_id = :post_id");
+    $delete_comments->bindValue(':post_id', $p_id, PDO::PARAM_INT);
+    $delete_comments->execute();
     $message[] = '投稿を削除しました。';
 }
 

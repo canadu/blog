@@ -65,8 +65,9 @@ if (isset($_POST['delete'])) {
             $select_account->execute();
             if ($select_account->rowCount() > 0) {
                 while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
-                    $count_admin_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
-                    $count_admin_posts->execute([$fetch_accounts['id']]);
+                    $count_admin_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id");
+                    $count_admin_posts->bindValue(':admin_id', $fetch_accounts['id'], PDO::PARAM_INT);
+                    $count_admin_posts->execute();
                     $total_admin_posts = $count_admin_posts->rowCount();
             ?>
                     <div class="box" style="order:<?php if ($fetch_accounts['id'] == $admin_id) {

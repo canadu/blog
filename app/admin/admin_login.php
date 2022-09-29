@@ -12,8 +12,9 @@ if (isset($_POST['submit'])) {
   $name = h($_POST['name']);
   $pass = h($_POST['pass']);
 
-  $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
-  $select_admin->execute([$name]);
+  $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = :name");
+  $select_admin->bindValue(':name', $name, PDO::PARAM_STR);
+  $select_admin->execute();
 
   if ($select_admin->rowCount() > 0) {
     $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);

@@ -12,8 +12,9 @@ if (!isset($admin_id)) {
 
 if (isset($_POST['delete_comment'])) {
     $comment_id = h($_POST['comment_id']);
-    $delete_comment = $conn->prepare("DELETE FROM comments WHERE id = ?");
-    $delete_comment->execute([$comment_id]);
+    $delete_comment = $conn->prepare("DELETE FROM comments WHERE id = :id");
+    $delete_comment->bindValue(':id', $comment_id, PDO::PARAM_INT);
+    $delete_comment->execute();
     $message[] = 'コメントを削除しました。';
 }
 
@@ -40,12 +41,14 @@ if (isset($_POST['delete_comment'])) {
         <p class="comment-title">投稿コメント</p>
         <div class="box-container">
             <?php
-            $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = ?");
-            $select_comments->execute([$admin_id]);
+            $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = :admin_id");
+            $select_comments->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+            $select_comments->execute();
             if ($select_comments->rowCount() > 0) {
                 while ($fetch_comments = $select_comments->fetch(PDO::FETCH_ASSOC)) {
-                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE id = ?");
-                    $select_posts->execute([$fetch_comments['post_id']]);
+                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE id = :id");
+                    $select_posts->bindValue(':id', $fetch_comments['post_id'], PDO::PARAM_INT);
+                    $select_posts->execute();
                     while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
             ?>
                         <div class="post-title">from : <span><?php echo $fetch_posts['title']; ?></span><a href="read_post.php?post_id=<?php echo $fetch_posts['id']; ?>">投稿を閲覧</a>

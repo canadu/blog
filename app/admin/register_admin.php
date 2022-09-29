@@ -19,15 +19,20 @@ if (isset($_POST['submit'])) {
     $confirm_pass = h($_POST['confirm_pass']);
 
     //同一ユーザー名の存在チェック
-    $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = ?");
-    $select_admin->execute([$name]);
+    $select_admin = $conn->prepare("SELECT * FROM admin WHERE name = :name");
+    $select_admin->bindValue(':name', $name, PDO::PARAM_STR);
+    $select_admin->execute();
 
     if ($select_admin->rowCount() > 0) {
         $message[] = '同じユーザー名が登録されています。';
     } else {
         if ($pass == $confirm_pass) {
-            $insert_admin = $conn->prepare("INSERT INTO admin(name,password) VALUES(?,?)");
-            $insert_admin->execute([$name, password_hash($confirm_pass, ENT_QUOTES)]);
+
+            $insert_admin = $conn->prepare("INSERT INTO admin(name,password) VALUES(:name, :password)");
+            $insert_admin->bindValue(':name', $name, PDO::PARAM_STR);
+            $insert_admin->bindValue(':password', password_hash($confirm_pass, ENT_QUOTES), PDO::PARAM_STR);
+            $insert_admin->execute();
+
             $message[] = '新しい管理者を登録しました。';
         } else {
             $message[] = "パスワードが一致しません。";

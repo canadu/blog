@@ -41,8 +41,9 @@ if (!isset($admin_id)) {
             <!-- 投稿総数  -->
             <div class="box">
                 <?php
-                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id =?");
-                $select_posts->execute([$admin_id]);
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id");
+                $select_posts->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_posts->execute();
                 $number_of_posts = $select_posts->rowCount();
                 ?>
                 <h3><?php echo $number_of_posts; ?></h3>
@@ -53,8 +54,10 @@ if (!isset($admin_id)) {
             <!-- 公開されている投稿  -->
             <div class="box">
                 <?php
-                $select_active_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id =? AND status = ?");
-                $select_active_posts->execute([$admin_id, 'active']);
+                $select_active_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id AND status = :status");
+                $select_active_posts->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_active_posts->bindValue(':status', 'active', PDO::PARAM_STR);
+                $select_active_posts->execute();
                 $number_of_active_posts = $select_active_posts->rowCount();
                 ?>
                 <h3><?php echo $number_of_active_posts; ?></h3>
@@ -65,8 +68,10 @@ if (!isset($admin_id)) {
             <!-- 非公開な投稿  -->
             <div class="box">
                 <?php
-                $select_deactive_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id =? AND status = ?");
-                $select_deactive_posts->execute([$admin_id, 'deactive']);
+                $select_deactive_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id AND status = :status");
+                $select_deactive_posts->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_deactive_posts->bindValue(':status', 'deactive', PDO::PARAM_STR);
+                $select_deactive_posts->execute();
                 $number_of_deactive_posts = $select_deactive_posts->rowCount();
                 ?>
                 <h3><?php echo $number_of_deactive_posts; ?></h3>
@@ -101,8 +106,9 @@ if (!isset($admin_id)) {
             <!-- コメント  -->
             <div class="box">
                 <?php
-                $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = ?");
-                $select_comments->execute([$admin_id]);
+                $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = :admin_id");
+                $select_comments->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_comments->execute();
                 $number_of_comments = $select_comments->rowCount();
                 ?>
                 <h3><?php echo $number_of_comments; ?></h3>
@@ -112,8 +118,9 @@ if (!isset($admin_id)) {
             <!-- いいね  -->
             <div class="box">
                 <?php
-                $select_likes = $conn->prepare("SELECT * FROM likes WHERE admin_id = ?");
-                $select_likes->execute([$admin_id]);
+                $select_likes = $conn->prepare("SELECT * FROM likes WHERE admin_id = :admin_id");
+                $select_likes->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_likes->execute();
                 $number_of_likes = $select_likes->rowCount();
                 ?>
                 <h3><?php echo $number_of_likes; ?></h3>

@@ -17,20 +17,28 @@ if (isset($_POST['submit'])) {
     //ユーザー名の更新
     $name = h($_POST['name']);
     if (!empty($name)) {
-        $select_name = $conn->prepare("SELECT * FROM admin WHERE name = ?");
-        $select_name->execute([$name]);
+
+        $select_name = $conn->prepare("SELECT * FROM admin WHERE name = :name");
+        $select_name->bindValue(':name', $name, PDO::PARAM_STR);
+        $select_name->execute();
+
         if ($select_name->rowCount() > 0) {
             $message[] = 'ユーザー名は既に利用されています。';
         } else {
-            $update_name = $conn->prepare("UPDATE admin SET name = ? WHERE id = ?");
-            $update_name->execute([$name, $admin_id]);
+
+            $update_name = $conn->prepare("UPDATE admin SET name = :name WHERE id = :id");
+            $update_name->bindValue(':name', $name, PDO::PARAM_STR);
+            $update_name->bindValue(':id', $admin_id, PDO::PARAM_INT);
+            $update_name->execute();
+
             $message[] = 'ユーザー名を更新しました。';
         }
     }
 
     //現在のパスワードを取得
-    $select_old_pass = $conn->prepare("SELECT password FROM admin WHERE id = ?");
-    $select_old_pass->execute([$admin_id]);
+    $select_old_pass = $conn->prepare("SELECT password FROM admin WHERE id = :id");
+    $select_old_pass->bindValue(':id', $admin_id, PDO::PARAM_INT);
+    $select_old_pass->execute();
 
     $fetch_prev_pass = $select_old_pass->fetch(PDO::FETCH_ASSOC);
     $prev_pass = $fetch_prev_pass['password'];
@@ -45,8 +53,10 @@ if (isset($_POST['submit'])) {
         } elseif ($new_pass != $confirm_pass) {
             $message[] = 'パスワードが一致しません。';
         } else {
-            $update_pass = $conn->prepare("UPDATE admin SET password = ? WHERE id = ?");
-            $update_pass->execute([password_hash(($confirm_pass), ENT_QUOTES), $admin_id]);
+            $update_pass = $conn->prepare("UPDATE admin SET password = :password WHERE id = :id");
+            $update_pass->bindValue(':password', password_hash(($confirm_pass), ENT_QUOTES), PDO::PARAM_STR);
+            $update_pass->bindValue(':id', $admin_id, PDO::PARAM_INT);
+            $update_pass->execute();
             $message[] = 'パスワードを更新しました。';
         }
     }

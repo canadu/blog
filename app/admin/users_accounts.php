@@ -40,12 +40,15 @@ if (!isset($admin_id)) {
                 while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
                     $user_id = $fetch_accounts['id'];
 
-                    $count_user_comments = $conn->prepare("SELECT * FROM comments WHERE user_id = ?");
-                    $count_user_comments->execute([$user_id]);
+                    $count_user_comments = $conn->prepare("SELECT * FROM comments WHERE user_id = :user_id");
+                    $count_user_comments->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                    $count_user_comments->execute();
+
                     $total_user_comments = $count_user_comments->rowCount();
 
-                    $count_user_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = ?");
-                    $count_user_likes->execute([$user_id]);
+                    $count_user_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = :user_id");
+                    $count_user_likes->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                    $count_user_likes->execute();
                     $total_user_likes = $count_user_likes->rowCount();
             ?>
                     <div class="box">

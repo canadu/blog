@@ -13,8 +13,11 @@ if (!isset($admin_id)) {
 if (isset($_POST['delete'])) {
     //削除処理
     $p_id = h($_POST['post_id']);
-    $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = ?");
-    $delete_image->execute([$p_id]);
+
+    $delete_image = $conn->prepare("SELECT * FROM posts WHERE id = :id");
+    $delete_image->bindValue(':id', $p_id, PDO::PARAM_INT);
+    $delete_image->execute();
+
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
     if ($fetch_delete_image['image'] != '') {
         //ファイルを削除
@@ -22,9 +25,14 @@ if (isset($_POST['delete'])) {
             unlink('../uploaded_img/' . $fetch_delete_image['image']);
         }
     }
-    $delete_post = $conn->prepare("DELETE FROM posts WHERE id = ?");
-    $delete_post->execute([$p_id]);
-    $delete_comments = $conn->prepare("DELETE FROM comments WHERE post_id = ?");
+    $delete_post = $conn->prepare("DELETE FROM posts WHERE id = :id");
+    $delete_post->bindValue(':id', $p_id, PDO::PARAM_INT);
+    $delete_post->execute();
+
+    $delete_comments = $conn->prepare("DELETE FROM comments WHERE post_id = :post_id");
+    $delete_comments->bindValue(':post_id', $p_id, PDO::PARAM_INT);
+    $delete_comments->execute();
+
     $message[] = '投稿を削除しました。';
 }
 
@@ -62,21 +70,29 @@ if (isset($_GET['status'])) {
             <?php
             //対象管理者の投稿を取得して表示する
             if (!empty($status) && ($status == 'active' || $status == 'deactive')) {
-                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and status='{$status}'");
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id and status='{$status}'");
             } else {
-                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
+                $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id");
             }
-            $select_posts->execute([$admin_id]);
+            $select_posts->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+            $select_posts->execute();
+
             if ($select_posts->rowCount() > 0) {
                 while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
                     $post_id = $fetch_posts['id'];
+
                     //コメントを取得
-                    $count_post_comments = $conn->prepare("SELECT * FROM comments WHERE post_id = ?");
-                    $count_post_comments->execute([$post_id]);
+                    $count_post_comments = $conn->prepare("SELECT * FROM comments WHERE post_id = :post_id");
+                    $count_post_comments->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+                    $count_post_comments->execute();
+
                     $total_post_comments = $count_post_comments->rowCount();
+
                     //いいねを取得
-                    $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = ?");
-                    $count_post_likes->execute([$post_id]);
+                    $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = :id");
+                    $count_post_likes->bindValue(':id', $post_id, PDO::PARAM_INT);
+                    $count_post_likes->execute();
+
                     $total_post_likes = $count_post_likes->rowCount();
             ?>
                     <form method="post" class="box">

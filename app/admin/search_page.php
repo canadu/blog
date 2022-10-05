@@ -62,22 +62,25 @@ if (isset($_POST['delete'])) {
                 $search_box = $_POST['search_box'];
                 //対象管理者の投稿を取得して表示する
                 if (empty($search_box)) {
-                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ?");
+                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id");
                 } else {
-                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = ? and title LIKE " . "'%{$search_box}%'");
+                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE admin_id = :admin_id and title LIKE " . "'%{$search_box}%'");
                 }
-                $select_posts->execute([$admin_id]);
+                $select_posts->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+                $select_posts->execute();
 
                 if ($select_posts->rowCount() > 0) {
                     while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
                         $post_id = $fetch_posts['id'];
                         //コメントを取得
-                        $count_post_comments = $conn->prepare("SELECT * FROM comments WHERE post_id = ?");
-                        $count_post_comments->execute([$post_id]);
+                        $count_post_comments = $conn->prepare("SELECT * FROM comments WHERE post_id = :post_id");
+                        $count_post_comments->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+                        $count_post_comments->execute();
                         $total_post_comments = $count_post_comments->rowCount();
                         //いいねを取得
-                        $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = ?");
-                        $count_post_likes->execute([$post_id]);
+                        $count_post_likes = $conn->prepare("SELECT * FROM likes WHERE post_id = :post_id");
+                        $count_post_likes->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+                        $count_post_likes->execute();
                         $total_post_likes = $count_post_likes->rowCount();
 
             ?>

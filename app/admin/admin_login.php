@@ -68,6 +68,7 @@ if (isset($_POST['submit'])) {
       <input type="submit" value="ログイン" name="submit" class="btn">
     </form>
   </section>
+
   <!-- admin login form section ends -->
   <script src="../js/admin_script.js"></script>
 </body>

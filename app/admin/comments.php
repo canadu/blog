@@ -18,68 +18,37 @@ if (isset($_POST['delete_comment'])) {
     $message[] = 'コメントを削除しました。';
 }
 
-?>
+//管理者コメントの件数を取得
+$select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = :admin_id");
+$select_comments->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
+$select_comments->execute();
+$count_comments = $select_comments->rowCount();
 
-<!DOCTYPE html>
-<html lang="ja">
+$comments = array();
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>コメントページ</title>
+if ($count_comments > 0) {
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    while ($fetch_comments = $select_comments->fetch(PDO::FETCH_ASSOC)) {
 
-    <link rel="stylesheet" href="../css/admin_style.css">
-</head>
+        //コメントした投稿を取得
+        $select_posts = $conn->prepare("SELECT * FROM posts WHERE id = :id");
+        $select_posts->bindValue(':id', $fetch_comments['post_id'], PDO::PARAM_INT);
+        $select_posts->execute();
+        $fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC);
 
-<body>
-    <?php include '../components/admin_header.php' ?>
-    <section class="comments">
-        <h1 class="heading">投稿コメント</h1>
-        <p class="comment-title">投稿コメント</p>
-        <div class="box-container">
-            <?php
-            $select_comments = $conn->prepare("SELECT * FROM comments WHERE admin_id = :admin_id");
-            $select_comments->bindValue(':admin_id', $admin_id, PDO::PARAM_INT);
-            $select_comments->execute();
-            if ($select_comments->rowCount() > 0) {
-                while ($fetch_comments = $select_comments->fetch(PDO::FETCH_ASSOC)) {
-                    $select_posts = $conn->prepare("SELECT * FROM posts WHERE id = :id");
-                    $select_posts->bindValue(':id', $fetch_comments['post_id'], PDO::PARAM_INT);
-                    $select_posts->execute();
-                    while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
-            ?>
-                        <div class="post-title">from : <span><?php echo $fetch_posts['title']; ?></span><a href="read_post.php?post_id=<?php echo $fetch_posts['id']; ?>">投稿を閲覧</a>
-                        <?php
-                    }
-                        ?>
-                        <div class="box">
-                            <div class="user">
-                                <i class="fas fa-user"></i>
-                                <div class="user-info">
-                                    <span><?php echo $fetch_comments['user_name']; ?></span>
-                                    <span><?php echo $fetch_comments['date']; ?></span>
-                                </div>
-                            </div>
-                            <div class="text"><?php echo $fetch_comments['comment'] ?></div>
-                            <form action="" method="POST">
-                                <input type="hidden" name="comment_id" value="<?php echo $fetch_comments['id']; ?>">
-                                <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('コメントを削除しますか?');">コメント削除</button>
-                            </form>
-                        </div>
-                <?php
-                }
-            } else {
-                echo '<p class="empty">コメントはまだありません</p>';
-            }
-                ?>
-                        </div>
-    </section>
+        // while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
+        //     $posts[] = ['id' => $fetch_posts['id'], 'title' => $fetch_posts['title']];
+        // }
 
-    <!-- admins accounts section ends -->
-    <script src="../js/admin_script.js"></script>
-</body>
+        $comments[] = [
+            'post_id' => $fetch_posts['id'],
+            'post_title' => $fetch_posts['title'],
+            'id' => $fetch_comments['id'],
+            'user_name' => $fetch_comments['user_name'],
+            'date' => $fetch_comments['date'],
+            'comment' => $fetch_comments['comment']
+        ];
+    }
+}
 
-</html>
+include '../views/admin/view_comments.php';
